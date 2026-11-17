@@ -1,0 +1,164 @@
+# MLAM — Global Solution (2º Semestre)
+
+## Análise Estatística no contexto do CitizenTech
+
+**Tema:** Desenvolvimento Humano e Desigualdades nos Municípios Brasileiros
+
+---
+
+### Integrantes
+
+| Nome completo          | RM     |
+|------------------------|--------|
+| Lucas Barros           | 571528 |
+| Renan Eskildssen       | 571097 |
+| Murillo Boyadjian      | 570774 |
+
+---
+
+### 1. Problema e Objetivo
+
+O desafio **CitizenTech** orienta a investigação de problemas associados às cidades, ao campo ou às comunidades. Neste trabalho, analisamos as **desigualdades no desenvolvimento humano entre os municípios brasileiros**, utilizando o Índice de Desenvolvimento Humano Municipal (IDHM) e suas três dimensões: educação, longevidade (saúde) e renda.
+
+**Objetivo das análises:**
+- Aplicar conceitos de probabilidade e distribuição normal
+- Realizar testes de hipóteses para a média
+- Conduzir análise bivariada e multivariada
+- Ajustar modelos de regressão linear (simples e múltipla)
+- Ajustar modelo de regressão logística binária
+- Interpretar os resultados no contexto do problema e apontar limitações
+
+---
+
+### 2. Base de Dados
+
+| Item | Descrição |
+|------|-----------|
+| **Nome** | Atlas do Desenvolvimento Humano no Brasil |
+| **Ano de referência** | 2010 |
+| **Fonte** | PNUD / IPEA / Fundação João Pinheiro (dados do Censo Demográfico do IBGE) |
+| **Acesso original** | [http://www.atlasbrasil.org.br/](http://www.atlasbrasil.org.br/) |
+| **Arquivo utilizado** | `idhm_municipios_2010.csv` |
+| **Unidade de análise** | 5.565 municípios brasileiros |
+| **Variáveis** | `IDHM`, `IDHM_E` (Educação), `IDHM_L` (Longevidade), `IDHM_R` (Renda) |
+
+> **Observação:** Não foram utilizados dados artificiais ou fictícios. A base foi filtrada para o ano de 2010 (mais recente disponível no conjunto original).
+
+---
+
+### 3. Estrutura do Repositório
+
+```
+├── idhm_municipios_2010.csv              # Base de dados
+├── MLAM_CitizenTech_Analise_Estatistica.ipynb  # Notebook principal (com saídas)
+├── analise_mlam_citizen_tech.py          # Script Python equivalente
+├── Relatorio_Estatistico_MLAM_CitizenTech.pdf  # Relatório estatístico (item 07)
+├── README.md                             # Este arquivo
+└── figuras/
+    ├── fig_02_distribuicao_normal.png
+    ├── fig_04a_dispersao.png
+    ├── fig_04c_correlacao.png
+    ├── fig_04d_regressao_simples.png
+    ├── fig_05a_dispersao_multipla.png
+    ├── fig_05c_correlacao_multipla.png
+    └── fig_06_matriz_confusao.png
+```
+
+---
+
+### 4. Como Executar os Códigos
+
+#### Pré-requisitos
+- Python 3.9 ou superior
+- Jupyter Notebook ou JupyterLab (recomendado)
+
+#### Instalação das bibliotecas
+
+```bash
+pip install pandas numpy matplotlib seaborn scipy statsmodels scikit-learn jupyter
+```
+
+#### Executando o notebook
+
+```bash
+jupyter notebook MLAM_CitizenTech_Analise_Estatistica.ipynb
+```
+
+Ou, se preferir o script:
+
+```bash
+python analise_mlam_citizen_tech.py
+```
+
+> O notebook já possui as **saídas salvas** (tabelas, métricas e gráficos) para facilitar a conferência.
+
+---
+
+### 5. Bibliotecas Utilizadas
+
+| Biblioteca     | Finalidade                                      |
+|----------------|-------------------------------------------------|
+| `pandas`       | Manipulação e análise de dados                  |
+| `numpy`        | Operações numéricas                             |
+| `matplotlib`   | Geração de gráficos                             |
+| `seaborn`      | Visualizações estatísticas                      |
+| `scipy`        | Testes estatísticos e distribuição normal       |
+| `statsmodels`  | Regressão linear e logística (com inferência)   |
+| `scikit-learn` | Validação cruzada e métricas de classificação   |
+
+---
+
+### 6. Síntese dos Principiais
+
+| Item do enunciado              | Arquivo / Localização                                      |
+|--------------------------------|------------------------------------------------------------|
+| Base de dados                  | `idhm_municipios_2010.csv`                                 |
+| Códigos em Python              | `MLAM_CitizenTech_Analise_Estatistica.ipynb` e `.py`       |
+| Relatório estatístico (PDF)    | `Relatorio_Estatistico_MLAM_CitizenTech.pdf`               |
+| README                         | Este arquivo                                               |
+
+---
+
+### 7. Principais Resultados
+
+1. **Probabilidade (Distribuição Normal)**  
+   P(IDHM < média) = 50% (evento equiprovável).  
+   P(IDHM > mediana) ≈ 46,8%.
+
+2. **Análise Bivariada (Renda × Educação)**  
+   Correlação de Pearson **r ≈ 0,82** (forte e positiva).  
+   Equação: `IDHM_E = -0,0506 + 0,9483 × IDHM_R`  
+   R² ≈ **0,67**.
+
+3. **Regressão Linear Múltipla**  
+   `IDHM_E = -0,1232 + 0,1440×IDHM_L + 0,8818×IDHM_R`  
+   R² ≈ **0,67** (ganho marginal em relação ao modelo simples).
+
+4. **Regressão Logística Binária**  
+   Classifica municípios em alto/baixo IDHM.  
+   **Acurácia ≈ 93,7%** (validação cruzada ≈ 93,5%).  
+   ROC-AUC ≈ 0,986.
+
+5. **Validação Cruzada (10-Fold)**  
+   Métricas de teste muito próximas das de treino, com baixo desvio entre folds → modelos estáveis e com boa capacidade de generalização.
+
+---
+
+### 8. Limitações
+
+- Dados referentes a **2010**; a realidade atual pode ter se alterado.
+- O IDHM é composto pelas três dimensões — modelos que preveem uma dimensão a partir das outras devem ser interpretados com cautela (possível multicolinearidade).
+- Análise de natureza **ecológica** (nível municipal); não permite inferências individuais.
+- Assunção de normalidade adotada conforme o enunciado.
+- Não foram incluídos controles para região, porte populacional ou outras variáveis estruturais.
+
+---
+
+### 9. Conclusão
+
+Os resultados evidenciam a forte interdependência entre **renda**, **educação** e **longevidade** nos municípios brasileiros. Os modelos de regressão (linear e logística) mostraram-se úteis para diagnosticar padrões de desenvolvimento humano e podem apoiar a priorização de intervenções no âmbito do CitizenTech.
+
+---
+
+**FIAP — MLAM — Global Solution — 2º Semestre**
+""")
